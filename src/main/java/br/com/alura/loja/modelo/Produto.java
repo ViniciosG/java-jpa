@@ -4,24 +4,20 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity // indicar que essa classe é uma entidade do JPA
-@Table(name = "produtos") // indica quequero usar a tabela produtos em meu banco de dados
-
+@Entity
+@Table(name = "produtos")
 public class Produto {
 
-	@Id // indica que a linha de baixo será meu ID do banco
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // Auto Increment
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	// @Column(name = "desc") //indicar que a coluna que quero do banco e utilizar uma string diferente no código
 	private String descricao;
 	private BigDecimal preco;
 	private LocalDate dataCadastro = LocalDate.now();
@@ -29,10 +25,10 @@ public class Produto {
 	@ManyToOne
 	private Categoria categoria;
 	
+	public Produto() {
+	}
 	
-
 	public Produto(String nome, String descricao, BigDecimal preco, Categoria categoria) {
-		super();
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
@@ -41,22 +37,6 @@ public class Produto {
 
 	public Long getId() {
 		return id;
-	}
-
-	public LocalDate getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDate dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
-
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
 	}
 
 	public void setId(Long id) {
@@ -86,7 +66,21 @@ public class Produto {
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
-	
-	
+
+	public LocalDate getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDate dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 
 }
