@@ -9,8 +9,7 @@
 		<class>br.com.alura.loja.modelo.Categoria</class>
 		<class>br.com.alura.loja.modelo.Cliente</class>
 		<class>br.com.alura.loja.modelo.ItemPedido</class>
-		<class>br.com.alura.loja.modelo.Livro</class>
-		<class>br.com.alura.loja.modelo.Informatica</class>
+
 
 	
 		<properties>
