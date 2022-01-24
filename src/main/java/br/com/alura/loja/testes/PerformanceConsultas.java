@@ -35,7 +35,7 @@ public class PerformanceConsultas {
 		Produto videogame = new Produto("PS5", "Playstation 5", new BigDecimal("8000"), videogames);
 		Produto macbook = new Produto("Macbook", "Macboo pro retina", new BigDecimal("14000"), informatica);
 
-		Cliente cliente = new Cliente("Vnicios", "123456789");
+		Cliente cliente = new Cliente("Rodrigo", "123456");
 
 		Pedido pedido = new Pedido(cliente);
 		pedido.adicionarItem(new ItemPedido(10, pedido, celular));

@@ -1,6 +1,7 @@
 package br.com.alura.loja.testes;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,42 +16,37 @@ public class TesteCriteria {
 
 	public static void main(String[] args) {
 		popularBancoDeDados();
-		
 		EntityManager em = JPAUtil.getEntityManager();
-		em.getTransaction().begin();
-		
 		ProdutoDao produtoDao = new ProdutoDao(em);
-		List<Produto> buscarPorParametrosComCriteria = produtoDao.buscarPorParametrosComCriteria("Iphone", null, null);
-		
-		buscarPorParametrosComCriteria.forEach(produto -> System.out.println(produto.getNome()));
+		List<Produto> produtos = produtoDao.buscarPorParametrosComCriteria(null, null, LocalDate.now());
+		produtos.forEach(p -> System.out.println(p.getNome()));
 	}
-	
-	public static void popularBancoDeDados() {
-		//criar 3 categorias e 3 produtos
-		Categoria categoria = new Categoria("CELULARES");
-		Categoria categoria1 = new Categoria("VIDEOGAMES");
-		Categoria categoria2 = new Categoria("INFORMATICA");
-		
-		Produto produto = new Produto("Iphone", "Iphone 11", new BigDecimal("5000.0"), categoria);
-		Produto produto1 = new Produto("XboX", "XBoX one", new BigDecimal("6000.0"), categoria1);
-		Produto produto2 = new Produto("Macbok", "Macbook Pro", new BigDecimal("12000.0"), categoria2);
+
+	private static void popularBancoDeDados() {
+		Categoria celulares = new Categoria("CELULARES");
+		Categoria videogames = new Categoria("VIDEOGAMES");
+		Categoria informatica = new Categoria("INFORMATICA");
+
+		Produto celular = new Produto("Xiaomi Redmi", "Muito legal", new BigDecimal("800"), celulares);
+		Produto videogame = new Produto("PS5", "Playstation 5", new BigDecimal("8000"), videogames);
+		Produto macbook = new Produto("Macbook", "Macboo pro retina", new BigDecimal("14000"), informatica);
 
 		EntityManager em = JPAUtil.getEntityManager();
-		em.getTransaction().begin();
-		
-		CategoriaDao categoriaDao = new CategoriaDao(em);
-		categoriaDao.cadastrar(categoria);
-		categoriaDao.cadastrar(categoria1);
-		categoriaDao.cadastrar(categoria2);
-		
 		ProdutoDao produtoDao = new ProdutoDao(em);
-		produtoDao.cadastrar(produto);
-		produtoDao.cadastrar(produto1);
-		produtoDao.cadastrar(produto2);
-		
+		CategoriaDao categoriaDao = new CategoriaDao(em);
+
+		em.getTransaction().begin();
+
+		categoriaDao.cadastrar(celulares);
+		categoriaDao.cadastrar(videogames);
+		categoriaDao.cadastrar(informatica);
+
+		produtoDao.cadastrar(celular);
+		produtoDao.cadastrar(videogame);
+		produtoDao.cadastrar(macbook);
+
 		em.getTransaction().commit();
 		em.close();
-		
 	}
-
+	
 }

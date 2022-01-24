@@ -63,53 +63,52 @@ public class ProdutoDao {
 				.getSingleResult();
 	}
 	
-	public List<Produto> buscarPorParametros(String nome, BigDecimal preco, LocalDate dataCadastro) {
+	public List<Produto> buscarPorParametros(String nome, 
+			BigDecimal preco, LocalDate dataCadastro) {
 		String jpql = "SELECT p FROM Produto p WHERE 1=1 ";
-		if(nome != null && !nome.trim().isEmpty()) {
-			jpql = "WHERE p.nome =: nome";
+		if (nome != null && !nome.trim().isEmpty()) {
+			jpql = " AND p.nome = :nome ";
 		}
-		if(preco != null) {
-			jpql = "AND p.preco =: preco";
+		if (preco != null) {
+			jpql = " AND p.preco = :preco ";
 		}
-		if(dataCadastro != null) {
-			jpql = "AND p.dataCadastro =: dataCadastro";
+		if (dataCadastro != null) {
+			jpql = " AND p.dataCadastro = :dataCadastro ";
 		}
-		
 		TypedQuery<Produto> query = em.createQuery(jpql, Produto.class);
-		
-		if(nome != null && !nome.trim().isEmpty()) {
+		if (nome != null && !nome.trim().isEmpty()) {
 			query.setParameter("nome", nome);
 		}
-		if(preco != null) {
+		if (preco != null) {
 			query.setParameter("preco", preco);
 		}
-		if(dataCadastro != null) {
+		if (dataCadastro != null) {
 			query.setParameter("dataCadastro", dataCadastro);
 		}
+		
 		return query.getResultList();
 	}
 	
-	public List<Produto> buscarPorParametrosComCriteria(String nome, BigDecimal preco, LocalDate dataCadastro) {
-		
+	public List<Produto> buscarPorParametrosComCriteria(String nome, 
+			BigDecimal preco, LocalDate dataCadastro) {
+	
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Produto> query = builder.createQuery(Produto.class);
 		Root<Produto> from = query.from(Produto.class);
 		
 		Predicate filtros = builder.and();
-		if(nome != null && !nome.trim().isEmpty()) {
-			 builder.and(filtros, builder.equal(from.get("nome"), nome)); 
+		if (nome != null && !nome.trim().isEmpty()) {
+			filtros = builder.and(filtros, builder.equal(from.get("nome"), nome));
 		}
-		if(preco != null) {
-			builder.and(filtros, builder.equal(from.get("preco"), preco)); 
+		if (preco != null) {
+			filtros = builder.and(filtros, builder.equal(from.get("preco"), preco));
 		}
-		if(dataCadastro != null) {
-			builder.and(filtros, builder.equal(from.get("dataCadastro"), dataCadastro)); 
+		if (dataCadastro != null) {
+			filtros = builder.and(filtros, builder.equal(from.get("dataCadastro"), dataCadastro));
 		}
-		
 		query.where(filtros);
 		
 		return em.createQuery(query).getResultList();
-		
 	}
-
+	
 }
