@@ -22,22 +22,20 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="valor_total")
+	@Column(name = "valor_total")
 	private BigDecimal valorTotal = BigDecimal.ZERO;
-	private LocalDate dataCadastro = LocalDate.now();
-	
+	private LocalDate data = LocalDate.now();
+
 	@ManyToOne
 	private Cliente cliente;
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL) //tudo que fizer no Pedido, faz no item Pedido
-	private List<ItemPedido> itens = new ArrayList<>(); //inicia uma lista não nula para evitar ficar fazendo ifs.
-	
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	private List<ItemPedido> itens = new ArrayList<>();
+
 	public Pedido() {
 	}
-	
-	
+
 	public Pedido(Cliente cliente) {
-		super();
 		this.cliente = cliente;
 	}
 	
@@ -47,44 +45,36 @@ public class Pedido {
 		this.valorTotal = this.valorTotal.add(item.getValor());
 	}
 
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public BigDecimal getValorTotal() {
 		return valorTotal;
 	}
 
-
-
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 
-
-
-	public LocalDate getDataCadastro() {
-		return dataCadastro;
+	public LocalDate getData() {
+		return data;
 	}
 
-
-
-	public void setDataCadastro(LocalDate dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
-
-
 
 	public Cliente getCliente() {
 		return cliente;
 	}
 
-
-
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
-
-
-	
 
 }

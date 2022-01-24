@@ -17,22 +17,26 @@ public class ItemPedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="preco_unitario")
+
+	@Column(name = "preco_unitario")
 	private BigDecimal precoUnitario;
+
 	private int quantidade;
 
 	@ManyToOne
 	private Pedido pedido;
-	
+
 	@ManyToOne
 	private Produto produto;
 
+	public ItemPedido() {
+	}
+
 	public ItemPedido(int quantidade, Pedido pedido, Produto produto) {
-		super();
 		this.quantidade = quantidade;
 		this.pedido = pedido;
-		this.produto = produto;
 		this.precoUnitario = produto.getPreco();
+		this.produto = produto;
 	}
 
 	public Long getId() {
@@ -76,7 +80,7 @@ public class ItemPedido {
 	}
 
 	public BigDecimal getValor() {
-		return precoUnitario.multiply(new BigDecimal (quantidade));
+		return precoUnitario.multiply(new BigDecimal(quantidade));
 	}
 
 }
